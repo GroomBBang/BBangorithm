@@ -1,0 +1,36 @@
+def solution(tickets):
+    answer = []
+    answers_prob = []
+    used = [0] * len(tickets)
+    
+    current_trip = []
+    def make_trip(place, used):
+        nonlocal current_trip
+        nonlocal answers_prob
+        current_trip.append(place)
+        
+        if not 0 in used:
+            answers_prob.append(current_trip[:])
+        
+        available_place = []
+        for idx, ticket in enumerate(tickets):
+            if ticket[0] == place and used[idx] == 0:
+                available_place.append(ticket[1])
+
+        if not available_place:
+            return
+        
+        for next_place in available_place:
+            for idx, ticket in enumerate(tickets):
+                if ticket[0] == place and ticket[1] == next_place and used[idx] == 0:
+                    used[idx] = 1
+                    make_trip(ticket[1], used)
+                    used[idx] = 0
+                    current_trip.pop()
+                    break
+        
+    make_trip("ICN", used)
+    answers_prob.sort()
+    answer = answers_prob[0]
+    
+    return answer
