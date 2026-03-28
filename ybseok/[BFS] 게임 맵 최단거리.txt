@@ -1,0 +1,36 @@
+from collections import deque
+
+def solution(maps):
+    answer = 0
+    
+    n = len(maps)
+    m = len(maps[0])
+    
+    dy = [-1, 1, 0, 0]
+    dx = [0, 0, -1, 1]
+    
+    visited=[[0] * m for _ in range(n)]
+    
+    queue = deque([[0,0,1]])
+    visited[0][0] = True
+    
+    while queue:
+        y, x, dist = queue.popleft()
+        
+        if y == n-1 and x == m-1:
+            answer = dist
+            break
+    
+        for i in range(4):
+            dy_next = y + dy[i]
+            dx_next = x + dx[i]
+            
+            if 0<= dy_next < n and 0<= dx_next < m:
+                if maps[dy_next][dx_next] == 1 and not visited[dy_next][dx_next]:
+                    visited[dy_next][dx_next] = True
+                    queue.append([dy_next, dx_next, dist+1])
+    
+    if answer == 0:
+        answer = -1
+        
+    return answer
