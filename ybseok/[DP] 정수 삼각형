@@ -1,0 +1,10 @@
+def solution(triangle):
+    answer = 0
+    
+    # i는 depth, j는 해당 depth row의 원소의 인덱스.
+    for i in range(len(triangle) -2, -1, -1):
+        for j, value in enumerate(triangle[i]):
+            triangle[i][j] += max(triangle[i+1][j], triangle[i+1][j+1])
+    
+    answer = triangle[0][0]
+    return answer
