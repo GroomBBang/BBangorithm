@@ -1,0 +1,18 @@
+def solution():
+    city_count = int(input())
+    city_distance = list(map(int, input().split()))
+    city_oil_price = list(map(int, input().split()))
+
+    total_price = 0
+    min_price = city_oil_price[0]
+
+    for i in range(city_count-1):
+        if city_oil_price[i] < min_price:
+            min_price = city_oil_price[i]
+
+        total_price += min_price * city_distance[i]
+
+    print(total_price)
+
+if __name__ == "__main__":
+    solution()
